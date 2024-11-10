@@ -272,18 +272,22 @@ void tambahMahasiswa() {
 
         printf("\n\t\t\tMasukkan Kelas: ");
         fgets(info.kelas, sizeof(info.kelas), stdin);
+        fflush(stdin);
         info.kelas[strcspn(info.kelas, "\n")] = '\0';  // Hapus newline
 
         printf("\n\t\t\tMasukkan Alamat: ");
         fgets(info.alamat, sizeof(info.alamat), stdin);
+        fflush(stdin);
         info.alamat[strcspn(info.alamat, "\n")] = '\0';  // Hapus newline
 
         printf("\n\t\t\tMasukkan Fakultas: ");
         fgets(info.fakultas, sizeof(info.fakultas), stdin);
+        fflush(stdin);
         info.fakultas[strcspn(info.fakultas, "\n")] = '\0';  // Hapus newline
 
         printf("\n\t\t\tMasukkan Prodi: ");
         fgets(info.prodi, sizeof(info.prodi), stdin);
+        fflush(stdin);
         info.prodi[strcspn(info.prodi, "\n")] = '\0';  // Hapus newline
 
         printf("\n\t\t\tMasukkan IPK: ");
@@ -387,6 +391,7 @@ void hapusMahasiswa() {
 	FILE *fp, *fp1;
 	int found = 0;
 	long long nim;
+	char konfirm;
 	
 	printf("\t\t\t\t=====Hapus Data Mahasiswa=====\n\n");
 	fp = fopen("mahasiswa_info.txt", "r");
@@ -413,10 +418,17 @@ void hapusMahasiswa() {
 	fclose(fp1);
 	
 	if(found == 1) {
-		remove("mahasiswa_info.txt");
-		rename("temp.txt", "mahasiswa_info.txt");
-		printf("\n\t\t\t\t______________________________");
-		printf("\n\t\t\t\tData berhasil dihapus\n");
+		printf("\n\t\t\t\tYakin ingin menghapus? [Y/T]: ");
+    	scanf(" %c", &konfirm);
+		if( konfirm == 'Y' || konfirm == 'y' ) {
+			remove("mahasiswa_info.txt");
+			rename("temp.txt", "mahasiswa_info.txt");
+			printf("\n\t\t\t\t______________________________");
+			printf("\n\t\t\t\tData berhasil dihapus\n");
+		} else {
+			printf("\n\t\t\t\tGagal menghapus data\n");
+		}
+		
 	} else {
 		printf("\n\t\t\t\tData tidak ditemukan\n");
 	}
