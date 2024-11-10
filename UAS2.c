@@ -13,6 +13,8 @@ struct mahasiswa {
     char kelas[10];
     char alamat[20];
     float ipk;
+    char fakultas[50];
+    char prodi[50];
 };
 
 void tambahMahasiswa();
@@ -128,7 +130,10 @@ int main() {
                 fp = fopen(strcat(filename, ".dat"), "r");
 
                 if (fp == NULL) {
-                    printf("\n\t\t\t\t\tAkun tidak terdaftar\n");
+                    printf("\n\t\t\t\t\tAkun tidak terdaftar, silakan registrasi\n");
+                    getch();
+                    opt = 1; // untuk pergi ke opsi 1 -> registrasi
+                    break;
                 } else {
                     fread(&info, sizeof(struct mahasiswa), 1, fp);
                     fclose(fp);
@@ -150,6 +155,10 @@ int main() {
                     exit(0);
                 }
             } while (cont == 'y' || cont == 'Y');
+            
+            if (opt == 1) {
+		        continue; // kembali ke menu utama untuk registrasi
+		    }
 
             // Bagian program utama jika login berhasil
             while (cont == 'y') {
@@ -235,83 +244,112 @@ int main() {
 }
 
 void tambahMahasiswa() {
-	FILE *fp;
-	struct mahasiswa info;
-	char ulang;
-	
-	do {
-		system("cls");
-		printf("\t\t\t\t=====Tambah Mahasiswa=====\n");
-		fp = fopen("mahasiswa_info.txt", "a");  // Gunakan mode "a" untuk menambah data
-		
-		if(fp == NULL) {
-			fprintf(stderr, "\t\t\tTidak bisa membuka file\n");
-			return;
-		}
-		
-		printf("\n\t\t\tMasukkan Nama Awal: ");
-		scanf("%s", info.nama_awal);
-		
-		printf("\n\t\t\tMasukkan Nama Akhir: ");
-		scanf("%s", info.nama_akhir);
-		
-		printf("\n\t\t\tMasukkan NIM: ");
-		scanf("%lld", &info.id_mahasiswa);
-		
-		printf("\n\t\t\tMasukkan Kelas: ");
-		scanf("%s", info.kelas);
-		
-		printf("\n\t\t\tMasukkan Alamat: ");
-		scanf("%s", info.alamat);
-		
-		printf("\n\t\t\tMasukkan IPK: ");
-		scanf("%f", &info.ipk);
-		
-		fwrite(&info, sizeof(struct mahasiswa), 1, fp);
-		fclose(fp);
-		
-		printf("\n\t\t\tBerhasil menambahkan data Mahasiswa\n");
-		
-		printf("\n\t\t\tIngin menambahkan data lagi? (y/n): ");
-		scanf(" %c", &ulang);
-		
-	} while(ulang == 'y' || ulang == 'Y');
+    FILE *fp;
+    struct mahasiswa info;
+    char ulang;
+
+    do {
+        system("cls");
+        printf("\t\t\t\t=====Tambah Mahasiswa=====\n");
+        fp = fopen("mahasiswa_info.txt", "a");  // Gunakan mode "ab" untuk menambah data (binary append)
+        
+        if(fp == NULL) {
+            fprintf(stderr, "\t\t\tTidak bisa membuka file\n");
+            return;
+        }
+
+        printf("\n\t\t\tMasukkan Nama Awal: ");
+        scanf("%s", info.nama_awal);
+        getchar();
+
+        printf("\n\t\t\tMasukkan Nama Akhir: ");
+        scanf("%s", info.nama_akhir);
+        getchar();
+
+        printf("\n\t\t\tMasukkan NIM: ");
+        scanf("%lld", &info.id_mahasiswa);
+        getchar();  // Membersihkan newline setelah scanf
+
+        printf("\n\t\t\tMasukkan Kelas: ");
+        fgets(info.kelas, sizeof(info.kelas), stdin);
+        info.kelas[strcspn(info.kelas, "\n")] = '\0';  // Hapus newline
+
+        printf("\n\t\t\tMasukkan Alamat: ");
+        fgets(info.alamat, sizeof(info.alamat), stdin);
+        info.alamat[strcspn(info.alamat, "\n")] = '\0';  // Hapus newline
+
+        printf("\n\t\t\tMasukkan Fakultas: ");
+        fgets(info.fakultas, sizeof(info.fakultas), stdin);
+        info.fakultas[strcspn(info.fakultas, "\n")] = '\0';  // Hapus newline
+
+        printf("\n\t\t\tMasukkan Prodi: ");
+        fgets(info.prodi, sizeof(info.prodi), stdin);
+        info.prodi[strcspn(info.prodi, "\n")] = '\0';  // Hapus newline
+
+        printf("\n\t\t\tMasukkan IPK: ");
+        scanf("%f", &info.ipk);
+        getchar();  // Membersihkan newline setelah scanf
+
+        fwrite(&info, sizeof(struct mahasiswa), 1, fp);  // Menulis data mahasiswa ke file
+        fclose(fp);
+
+        printf("\n\t\t\tBerhasil menambahkan data Mahasiswa\n");
+
+        printf("\n\t\t\tIngin menambahkan data lagi? (y/n): ");
+        scanf(" %c", &ulang);
+        getchar();  // Membersihkan newline setelah scanf
+
+    } while(ulang == 'y' || ulang == 'Y');
 }
 
+
+
+
 void dataMahasiswa() {
-	struct mahasiswa info;
-	FILE *fp;
-	
-	fp = fopen("mahasiswa_info.txt", "r");
-	
-	printf("\t\t\t\t=====Data Mahasiswa=====\n\n");
-	
-	if(fp == NULL) {
-		fprintf(stderr, "\t\t\t\tFile Kosong\n");
-		getch();
-		return;
+    struct mahasiswa info;
+    FILE *fp;
+    int found = 0;
+
+    fp = fopen("mahasiswa_info.txt", "r");  // Membuka file dalam mode baca biner
+
+    printf("\t\t\t\t=====Data Mahasiswa=====\n\n");
+
+    if(fp == NULL) {
+        fprintf(stderr, "\t\t\t\tFile Kosong\n");
+        getch();  // Menunggu input dari pengguna untuk kembali
+        return;
+    }
+
+    // Loop untuk membaca dan menampilkan data mahasiswa dari file
+    while(fread(&info, sizeof(struct mahasiswa), 1, fp)) {
+    	found = 1;
+        printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
+        printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
+        printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
+        printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);      // Menampilkan alamat yang diinput dengan fgets
+        printf("\n\t\t\t\tFakultas\t: %s", info.fakultas); // Menampilkan fakultas yang diinput dengan fgets
+        printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);     // Menampilkan prodi yang diinput dengan fgets
+        printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
+        printf("\n\t\t\t\t_____________________________________\n\n");
+    }
+
+    fclose(fp);
+    
+    if(found == 0) {
+		printf("\n\t\t\t\tData kosong\n");
 	}
-	
-	while(fread(&info, sizeof(struct mahasiswa), 1, fp)) {
-		printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
-		printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
-		printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
-		printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
-		printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
-		printf("\n\t\t\t\t_____________________________________\n\n");
-	}
-	
-	fclose(fp);
-	
-	printf("\t\t\t\tTekan mana saja untuk kembali...");
-	getch();
+
+    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    getch();  // Menunggu input dari pengguna untuk kembali
 }
+
+
 
 
 void cariMahasiswa() {
 	struct mahasiswa info;
 	FILE *fp;
-	int found;
+	int found = 0;
 	long long nim;
 	
 	fp = fopen("mahasiswa_info.txt", "r");
@@ -328,13 +366,16 @@ void cariMahasiswa() {
 			printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
 			printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
 			printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
+			// new
+			printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
+			printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
 			printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
 			printf("\n\t\t\t\t_____________________________________\n\n");
 		}
 	}
 	
-	if(!found) {
-		printf("\t\t\tData tidak ditemukan!\n");
+	if(found == 0) {
+		printf("\n\t\t\t\tData tidak ditemukan!\n");
 	}
 	
 	printf("\n\t\t\t\tTekan mana saja untuk kembali...");
@@ -355,7 +396,8 @@ void hapusMahasiswa() {
 	scanf("%lld", &nim);
 	
 	if(fp == NULL || fp1 == NULL) {
-		fprintf(stderr, "\t\t\tTidak dapat membuka file\n");
+		fprintf(stderr, "\t\t\tData tidak ditemukan.\n");
+		getch();
 		return;
 	}
 	
@@ -370,7 +412,7 @@ void hapusMahasiswa() {
 	fclose(fp);
 	fclose(fp1);
 	
-	if(found) {
+	if(found == 1) {
 		remove("mahasiswa_info.txt");
 		rename("temp.txt", "mahasiswa_info.txt");
 		printf("\n\t\t\t\t______________________________");
@@ -386,7 +428,7 @@ void hapusMahasiswa() {
 void editMahasiswa() {
 	struct mahasiswa info;
 	FILE *fp, *fp1;
-	int found;
+	int found = 0;
 	long long nim;
 	
 	printf("\t\t\t\t=====Edit Data Mahasiswa=====\n\n");
@@ -397,7 +439,8 @@ void editMahasiswa() {
 	scanf("%lld", &nim);
 	
 	if(fp == NULL || fp1 == NULL) {
-		fprintf(stderr, "\t\t\tFile kosong\n");
+		fprintf(stderr, "\t\t\tData tidak ditemukan\n");
+		getch();
 		return;
 	}
 	
@@ -410,6 +453,9 @@ void editMahasiswa() {
 			printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
 			printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
 			printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
+					// new
+			printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
+			printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
 			printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
 			printf("\n\t\t\t\t_____________________________________\n\n");
 			
@@ -417,6 +463,7 @@ void editMahasiswa() {
 			printf("\n\t\t\tMasukkan nama awal baru (0 untuk skip): ");
 			char new_nama_awal[20];
 			scanf("%s", new_nama_awal);
+			fflush(stdin);
 			if( strcmp(new_nama_awal, "0") != 0 ) {
 				strcpy(info.nama_awal, new_nama_awal);
 			}
@@ -424,6 +471,7 @@ void editMahasiswa() {
 			printf("\n\t\t\tMasukkan nama akhir baru (0 untuk skip): ");
 			char new_nama_akhir[20];
 			scanf("%s", new_nama_akhir);
+			fflush(stdin);
 			if( strcmp(new_nama_akhir, "0") != 0 ) {
 				strcpy(info.nama_akhir, new_nama_akhir);
 			}
@@ -431,6 +479,7 @@ void editMahasiswa() {
 			printf("\n\t\t\tMasukkan NIM baru (0 untuk skip): ");
 			long long new_nim;
 			scanf("%lld", &new_nim);
+			fflush(stdin);
 			if( new_nim != 0 ) {
 				info.id_mahasiswa = new_nim;
 			}
@@ -438,20 +487,47 @@ void editMahasiswa() {
 			printf("\n\t\t\tMasukkan kelas baru (0 untuk skip): ");
 			char new_kelas[20];
 			scanf("%s", new_kelas);
+			fflush(stdin);
 			if( strcmp(new_kelas, "0") != 0 ) {
 				strcpy(info.kelas, new_kelas);
 			}
 			
 			printf("\n\t\t\tMasukkan alamat baru (0 untuk skip): ");
 			char new_alamat[20];
-			scanf("%s", new_alamat);
+			fgets(new_alamat, sizeof(new_alamat), stdin);
+//			gecthar(); // hapus new line
+			fflush(stdin);
+			new_alamat[strcspn(new_alamat, "\n")] = '\0';  // Menghapus newline
 			if( strcmp(new_alamat, "0") != 0 ) {
 				strcpy(info.alamat, new_alamat);
+			}
+			
+			// new
+			printf("\n\t\t\tMasukkan fakultas baru (0 untuk skip): ");
+			char new_fakultas[50];
+//			scanf("%s", new_fakultas);
+			fgets(new_fakultas, sizeof(new_fakultas), stdin);
+			fflush(stdin);
+			new_fakultas[strcspn(new_fakultas, "\n")] = '\0';  // Menghapus newline
+			if( strcmp(new_fakultas, "0") != 0 ) {
+				strcpy(info.fakultas, new_fakultas);
+			}
+			
+			// new
+			printf("\n\t\t\tMasukkan prodi baru (0 untuk skip): ");
+			char new_prodi[50];
+//			scanf("%s", new_prodi);
+			fgets(new_prodi, sizeof(new_prodi), stdin);
+			fflush(stdin);
+			new_prodi[strcspn(new_prodi, "\n")] = '\0';  // Menghapus newline
+			if( strcmp(new_prodi, "0") != 0 ) {
+				strcpy(info.prodi, new_prodi);
 			}
 			
 			printf("\n\t\t\tMasukkan ipk baru (0 untuk skip): ");
 			float new_ipk;
 			scanf("%f", &new_ipk);
+			fflush(stdin);
 			if( new_ipk != 0 ) {
 				info.ipk = new_ipk;
 			}
@@ -467,7 +543,7 @@ void editMahasiswa() {
 	fclose(fp);
 	fclose(fp1);
 	
-	if(found) {
+	if(found == 1) {
 		remove("mahasiswa_info.txt");
 		rename("temp.txt", "mahasiswa_info.txt");
 	} else {
@@ -568,6 +644,9 @@ void sortirAsc() {
 		printf("\n\t\t\t\tNIM\t\t: %lld", info[i].id_mahasiswa);
 		printf("\n\t\t\t\tKelas\t\t: %s", info[i].kelas);
 		printf("\n\t\t\t\tAlamat\t\t: %s", info[i].alamat);
+		// new
+		printf("\n\t\t\t\tFakultas\t: %s", info[i].fakultas);
+		printf("\n\t\t\t\tProdi\t\t: %s", info[i].prodi);
 		printf("\n\t\t\t\tIPK\t\t: %.2f", info[i].ipk);
 		printf("\n\t\t\t\t_____________________________________\n\n");
 	}
@@ -612,6 +691,9 @@ void sortirDesc() {
 		printf("\n\t\t\t\tNIM\t\t: %lld", info[i].id_mahasiswa);
 		printf("\n\t\t\t\tKelas\t\t: %s", info[i].kelas);
 		printf("\n\t\t\t\tAlamat\t\t: %s", info[i].alamat);
+		// new
+		printf("\n\t\t\t\tFakultas\t: %s", info[i].fakultas);
+		printf("\n\t\t\t\tProdi\t\t: %s", info[i].prodi);
 		printf("\n\t\t\t\tIPK\t\t: %.2f", info[i].ipk);
 		printf("\n\t\t\t\t_____________________________________\n\n");
 	}
