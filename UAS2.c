@@ -7,6 +7,7 @@
 struct mahasiswa {
     char username[50];
     char password[50];
+    char role;
     char nama_awal[20];
     char nama_akhir[20];
     long long id_mahasiswa;
@@ -58,6 +59,110 @@ void inputPassword(char *password) {
     password[index] = '\0'; // Akhiri string dengan null terminator
 }
 
+void menuDosen() {
+	int menu;
+	printf("\t\t\t\t ");
+	scanf("%d", &menu);
+	switch (menu) {
+	    case 1:
+	        system("cls");
+	        tambahMahasiswa();
+            system("cls");
+	        break;
+	    case 2:
+			system("cls");
+	        dataMahasiswa();
+	    	system("cls");
+        	break;
+	    case 3:
+	        system("cls");
+			cariMahasiswa();
+			system("cls");
+			break;
+		case 4:
+			system("cls");
+			hapusMahasiswa();
+			system("cls");
+			break;
+		case 5:
+			system("cls");
+			editMahasiswa();
+			system("cls");
+			break;
+		case 6:
+			system("cls");
+			hapusSemua();
+			system("cls");
+			break;
+		case 7:
+			system("cls");
+			sortirAsc();
+			system("cls");
+			break;
+	    case 8:
+			system("cls");
+			sortirDesc();
+			system("cls");
+			break;
+		case 9:
+			system("cls");
+			tentangKami();
+			system("cls");
+			break;
+		case 0:
+			system("cls");
+			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
+			exit(0);
+			break;
+		default:
+			system("cls");
+			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			getch();
+			system("cls");
+			break;
+	} // end switch
+}
+
+void menuMahasiswa() {
+	int menu;
+	printf("\t\t\t\t ");
+	scanf("%d", &menu);
+	switch (menu) {
+	    case 1:
+	        system("cls");
+	        cariMahasiswa();
+            system("cls");
+	        break;
+	    case 2:
+			system("cls");
+	        sortirAsc();
+	    	system("cls");
+        	break;
+	    case 3:
+	        system("cls");
+			sortirDesc();
+			system("cls");
+			break;
+		case 4:
+			system("cls");
+			tentangKami();
+			system("cls");
+			break;
+		case 0:
+			system("cls");
+			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
+			exit(0);
+			break;
+		default:
+			system("cls");
+			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			getch();
+			system("cls");
+			break;
+	} // end switch
+}
 
 int main() {
     struct mahasiswa info;
@@ -82,6 +187,10 @@ int main() {
 
                 printf("\t\t\t\t\tMasukkan username\t: ");
                 scanf("%s", info.username);
+                
+                printf("\t\t\t\t\tPilih peran:\n\t\t\t\t\t(D) Dosen / (M) Mahasiswa: ");
+                scanf(" %c", &info.role);
+                getchar();
 
                 printf("\t\t\t\t\tMasukkan password\t: ");
                 inputPassword(info.password);
@@ -164,79 +273,33 @@ int main() {
             while (cont == 'y') {
                 system("cls");
                 printf("\t\t\t\t=====SELAMAT DATANG DI DATABASE MAHASISWA=====\n\n");
-                printf("\n\n\n\t\t\t\t1. Tambah Mahasiswa\n");
-	            printf("\t\t\t\t2. Data Seluruh Mahasiswa\n");
-	            printf("\t\t\t\t3. Cari Data Mahasiswa\n");
-	            printf("\t\t\t\t4. Hapus Data Mahasiswa\n");
-	            printf("\t\t\t\t5. Edit Data Mahasiswa\n");
-	            printf("\t\t\t\t6. Hapus Semua Data Mahasiswa\n");
-	            printf("\t\t\t\t7. Sortir IPK Mahasiswa (ASC)\n");
-	            printf("\t\t\t\t8. Sortir IPK Mahasiswa (DESC)\n");
-	            printf("\t\t\t\t9. Tentang Kami\n");
-	            printf("\t\t\t\t0. Keluar\n");
-	            printf("\t\t\t\t ________________________________________\n");
-	            printf("\t\t\t\t ");
-	            scanf("%d", &menu);
-	
-	            switch (menu) {
-	                case 1:
-	                    system("cls");
-	                    tambahMahasiswa();
-	                    system("cls");
-	                    break;
-	                case 2:
-	                    system("cls");
-	                    dataMahasiswa();
-	                    system("cls");
-	                    break;
-	                case 3:
-	                    system("cls");
-	                    cariMahasiswa();
-	                    system("cls");
-	                    break;
-	                case 4:
-	                    system("cls");
-	                    hapusMahasiswa();
-	                    system("cls");
-	                    break;
-	                case 5:
-	                    system("cls");
-	                    editMahasiswa();
-	                    system("cls");
-	                    break;
-	                case 6:
-	                    system("cls");
-	                    hapusSemua();
-	                    system("cls");
-	                    break;
-	                case 7:
-	                    system("cls");
-	                    sortirAsc();
-	                    system("cls");
-	                    break;
-	                case 8:
-	                    system("cls");
-	                    sortirDesc();
-	                    system("cls");
-	                    break;
-	                case 9:
-	                    system("cls");
-	                    tentangKami();
-	                    system("cls");
-	                    break;
-	                case 0:
-	                    system("cls");
-	                    printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
-	                    exit(0);
-	                    break;
-	                default:
-	                    system("cls");
-	                    printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
-	                    printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
-	                    getch();
-	                    system("cls");
-	                    break;
-	            }
+                
+                if(info.role == 'D' || info.role == 'd') {
+	                printf("\n\n\n\t\t\t\t1. Tambah Mahasiswa\n");
+		            printf("\t\t\t\t2. Data Seluruh Mahasiswa\n");
+		            printf("\t\t\t\t3. Cari Data Mahasiswa\n");
+		            printf("\t\t\t\t4. Hapus Data Mahasiswa\n");
+		            printf("\t\t\t\t5. Edit Data Mahasiswa\n");
+		            printf("\t\t\t\t6. Hapus Semua Data Mahasiswa\n");
+		            printf("\t\t\t\t7. Sortir IPK Mahasiswa (ASC)\n");
+		            printf("\t\t\t\t8. Sortir IPK Mahasiswa (DESC)\n");
+		            printf("\t\t\t\t9. Tentang Kami\n");
+		            printf("\t\t\t\t0. Keluar\n");
+		            printf("\t\t\t\t ________________________________________\n");
+					menuDosen();
+				} else if(info.role == 'M' || info.role == 'm') {
+					printf("\t\t\t\t1. Cari Data Mahasiswa\n");
+					printf("\t\t\t\t2. Sortir IPK Mahasiswa (ASC)\n");
+		            printf("\t\t\t\t3. Sortir IPK Mahasiswa (DESC)\n");
+		            printf("\t\t\t\t4. Tentang Kami\n");
+		            printf("\t\t\t\t0. Keluar\n");
+		            printf("\t\t\t\t ________________________________________\n");
+		            menuMahasiswa();
+				} else {
+					printf("Peran tidak valid. Program dihentikan.\n");
+					break;
+				}
+				
             }
         }
     }
