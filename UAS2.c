@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <windows.h>
+#include <time.h>
 
 struct mahasiswa {
     char username[50];
@@ -11,11 +12,25 @@ struct mahasiswa {
     char nama_awal[20];
     char nama_akhir[20];
     long long id_mahasiswa;
+    long long nim_reg;
     char kelas[10];
     char alamat[20];
     float ipk;
     char fakultas[50];
     char prodi[50];
+    int aksesMataKuliah; // 0 = belum di berikan.  1 = sudah di berikan akses
+    int lastAksesMonth;        // Bulan terakhir akses diberikan
+    int lastAksesYear;         // Tahun terakhir akses diberikan
+    char mataKuliah[5][50];    // Daftar mata kuliah yang diambil (maksimum 5 mata kuliah)
+    int jumlahMataKuliah;
+};
+
+struct regist {
+	long long nim;
+};
+
+struct login {
+	long long nim;
 };
 
 void tambahMahasiswa();
@@ -27,6 +42,13 @@ void hapusSemua();
 void tentangKami();
 void sortirAsc();
 void sortirDesc();
+void menuDosen();
+void menuMahasiswa();
+void profilMahasiswa();
+void getCurrentMonthYear(int *month, int *year);
+void berikanAksesMataKuliah(long long nim);
+void ambilMataKuliah(long long nimMahasiswa);
+void tampilkanPilihanMataKuliah();
 
 // Fungsi untuk qsort ASC dan DESC berdasarkan IPK
 int bandingIPKAsc(const void *a, const void *b) {
@@ -34,6 +56,7 @@ int bandingIPKAsc(const void *a, const void *b) {
     struct mahasiswa *mhsB = (struct mahasiswa *)b;
     return (mhsA->ipk > mhsB->ipk) - (mhsA->ipk < mhsB->ipk);
 }
+
 
 int bandingIPKDesc(const void *a, const void *b) {
     struct mahasiswa *mhsA = (struct mahasiswa *)a;
@@ -59,116 +82,20 @@ void inputPassword(char *password) {
     password[index] = '\0'; // Akhiri string dengan null terminator
 }
 
-void menuDosen() {
-	int menu;
-	printf("\t\t\t\t ");
-	scanf("%d", &menu);
-	switch (menu) {
-	    case 1:
-	        system("cls");
-	        tambahMahasiswa();
-            system("cls");
-	        break;
-	    case 2:
-			system("cls");
-	        dataMahasiswa();
-	    	system("cls");
-        	break;
-	    case 3:
-	        system("cls");
-			cariMahasiswa();
-			system("cls");
-			break;
-		case 4:
-			system("cls");
-			hapusMahasiswa();
-			system("cls");
-			break;
-		case 5:
-			system("cls");
-			editMahasiswa();
-			system("cls");
-			break;
-		case 6:
-			system("cls");
-			hapusSemua();
-			system("cls");
-			break;
-		case 7:
-			system("cls");
-			sortirAsc();
-			system("cls");
-			break;
-	    case 8:
-			system("cls");
-			sortirDesc();
-			system("cls");
-			break;
-		case 9:
-			system("cls");
-			tentangKami();
-			system("cls");
-			break;
-		case 0:
-			system("cls");
-			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
-			exit(0);
-			break;
-		default:
-			system("cls");
-			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
-			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
-			getch();
-			system("cls");
-			break;
-	} // end switch
-}
-
-void menuMahasiswa() {
-	int menu;
-	printf("\t\t\t\t ");
-	scanf("%d", &menu);
-	switch (menu) {
-	    case 1:
-	        system("cls");
-	        cariMahasiswa();
-            system("cls");
-	        break;
-	    case 2:
-			system("cls");
-	        sortirAsc();
-	    	system("cls");
-        	break;
-	    case 3:
-	        system("cls");
-			sortirDesc();
-			system("cls");
-			break;
-		case 4:
-			system("cls");
-			tentangKami();
-			system("cls");
-			break;
-		case 0:
-			system("cls");
-			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
-			exit(0);
-			break;
-		default:
-			system("cls");
-			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
-			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
-			getch();
-			system("cls");
-			break;
-	} // end switch
-}
-
+//long long nim_login;
+long long nim_login2;
 int main() {
     struct mahasiswa info;
-    FILE *fp;
+    struct regist reg;
+    struct login log;
+    
+    FILE *fp, *fp2;
     char filename[50], username[50], password[50];
     int opt, menu;
+    long long nim;
+    long long nim_login;
+    
+
     char cont = 'y';
 
     while (1) {  // Loop utama untuk kembali ke halaman login/register
@@ -191,6 +118,25 @@ int main() {
                 printf("\t\t\t\t\tPilih peran:\n\t\t\t\t\t(D) Dosen / (M) Mahasiswa: ");
                 scanf(" %c", &info.role);
                 getchar();
+                
+                if(info.role == 'm' || info.role == 'M') {
+                	// Membuka file nim.txt dalam mode append biner
+    				fp2 = fopen("nim.txt", "ab");
+				    if (fp2 == NULL) {
+				        fprintf(stderr, "\t\t\tTidak dapat membuka file nim.txt\n");
+				        return;
+				    }
+				    
+				    printf("\n\t\t\t\t\tMasukkan NIM: ");
+				    scanf("%lld", &reg.nim);  // Input NIM dari mahasiswa
+				
+				    // Menulis NIM yang terdaftar ke file nim.txt
+				    fwrite(&reg.nim, sizeof(long long), 1, fp2);  // Menulis NIM ke file
+				
+				    fclose(fp2);  // Menutup file nim.txt
+				}
+		        
+		        
 
                 printf("\t\t\t\t\tMasukkan password\t: ");
                 inputPassword(info.password);
@@ -227,10 +173,22 @@ int main() {
             do {
                 system("cls");
                 printf("\t\t\t\t\t=====Silakan Login=====\n\n");
+                
+                printf("\t\t\t\t\tLogin sebagai:\n\t\t\t\t\t(D) Dosen / (M) Mahasiswa: ");
+                scanf(" %c", &info.role);
+                getchar();
+                
+                if(info.role == 'm' || info.role == 'M') {
+	                printf("\n\t\t\t\t\tMasukkan nim\t: ");
+	                scanf("%lld", &log.nim);
+	                
+	                nim_login2 = log.nim;
+				}
 
                 printf("\n\t\t\t\t\tMasukkan username\t: ");
                 scanf("%s", username);
-
+                
+                
                 printf("\n\t\t\t\t\tMasukkan password\t: ");
                 inputPassword(password);
                 printf("\n");
@@ -283,15 +241,19 @@ int main() {
 		            printf("\t\t\t\t6. Hapus Semua Data Mahasiswa\n");
 		            printf("\t\t\t\t7. Sortir IPK Mahasiswa (ASC)\n");
 		            printf("\t\t\t\t8. Sortir IPK Mahasiswa (DESC)\n");
-		            printf("\t\t\t\t9. Tentang Kami\n");
+		            printf("\t\t\t\t9. Berikan akses mata kuliah\n");
+		            printf("\t\t\t\t10. Tentang Kami\n");
+		            printf("\t\t\t\t11. Tampilkan Pilihan Mata Kuliah\n");
 		            printf("\t\t\t\t0. Keluar\n");
 		            printf("\t\t\t\t ________________________________________\n");
 					menuDosen();
 				} else if(info.role == 'M' || info.role == 'm') {
 					printf("\t\t\t\t1. Cari Data Mahasiswa\n");
-					printf("\t\t\t\t2. Sortir IPK Mahasiswa (ASC)\n");
-		            printf("\t\t\t\t3. Sortir IPK Mahasiswa (DESC)\n");
-		            printf("\t\t\t\t4. Tentang Kami\n");
+					printf("\t\t\t\t2. Ambil mata kuliah\n");
+					printf("\t\t\t\t3. Sortir IPK Mahasiswa (ASC)\n");
+		            printf("\t\t\t\t4. Sortir IPK Mahasiswa (DESC)\n");
+		            printf("\t\t\t\t5. Tentang Kami\n");
+		            printf("\t\t\t\t6. Profil Mahasiswa\n");
 		            printf("\t\t\t\t0. Keluar\n");
 		            printf("\t\t\t\t ________________________________________\n");
 		            menuMahasiswa();
@@ -301,9 +263,270 @@ int main() {
 				}
 				
             }
-        }
+        } // end if
     }
     return 0;
+}
+
+
+void menuDosen() {
+	int menu;
+	long long nim;
+	
+	printf("\t\t\t\t ");
+	scanf("%d", &menu);
+	switch (menu) {
+	    case 1:
+	        system("cls");
+	        tambahMahasiswa();
+            system("cls");
+	        break;
+	    case 2:
+			system("cls");
+	        dataMahasiswa();
+	    	system("cls");
+        	break;
+	    case 3:
+	        system("cls");
+			cariMahasiswa();
+			system("cls");
+			break;
+		case 4:
+			system("cls");
+			hapusMahasiswa();
+			system("cls");
+			break;
+		case 5:
+			system("cls");
+			editMahasiswa();
+			system("cls");
+			break;
+		case 6:
+			system("cls");
+			hapusSemua();
+			system("cls");
+			break;
+		case 7:
+			system("cls");
+			sortirAsc();
+			system("cls");
+			break;
+	    case 8:
+			system("cls");
+			sortirDesc();
+			system("cls");
+			break;
+		case 9:
+			system("cls");
+			printf("Masukkan NIM Mahasiswa untuk diberikan akses: ");
+            scanf("%lld", &nim);
+            berikanAksesMataKuliah(nim);
+			system("cls");
+			break;
+		case 10:
+			system("cls");
+			tentangKami();
+			system("cls");
+			break;
+		case 11:
+			system("cls");
+			tampilkanPilihanMataKuliah();
+			system("cls");
+			break;
+		case 0:
+			system("cls");
+			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
+			exit(0);
+			break;
+		default:
+			system("cls");
+			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			getch();
+			system("cls");
+			break;
+	} // end switch
+}
+
+void menuMahasiswa() {
+	int menu;
+	long long nim;
+	
+	printf("\t\t\t\t ");
+	scanf("%d", &menu);
+	
+	switch (menu) {
+	    case 1:
+	        system("cls");
+	        cariMahasiswa();
+            system("cls");
+	        break;
+	    case 2:
+	        system("cls");
+	        printf("Masukkan NIM Anda: ");
+            scanf("%lld", &nim);
+            ambilMataKuliah(nim);
+            system("cls");
+	        break;
+	    case 3:
+			system("cls");
+	        sortirAsc();
+	    	system("cls");
+        	break;
+	    case 4:
+	        system("cls");
+			sortirDesc();
+			system("cls");
+			break;
+		case 5:
+			system("cls");
+			tentangKami();
+			system("cls");
+			break;
+		case 6:
+			system("cls");
+			profilMahasiswa();
+            system("cls");
+            break;
+		case 0:
+			system("cls");
+			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
+			exit(0);
+			break;
+		default:
+			system("cls");
+			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			getch();
+			system("cls");
+			break;
+	} // end switch
+}
+
+
+void getCurrentMonthYear(int *month, int *year) {
+    time_t t = time(NULL);
+    struct tm *current = localtime(&t);
+    *month = current->tm_mon + 1; // tm_mon adalah 0-11, jadi tambahkan 1 untuk mendapatkan 1-12
+    *year = current->tm_year + 1900;
+}
+
+void berikanAksesMataKuliah(long long nimMahasiswa) {
+    FILE *fp;
+    struct mahasiswa info;
+    int found = 0;
+
+    fp = fopen("mahasiswa_info.txt", "rb+");  // Membuka file profil dalam mode baca dan tulis
+    if (fp == NULL) {
+        fprintf(stderr, "Tidak dapat membuka file mahasiswa_info.txt\n");
+        getch();
+        return;
+    }
+
+    while (fread(&info, sizeof(struct mahasiswa), 1, fp) == 1) {
+        if (info.id_mahasiswa == nimMahasiswa) {
+            info.aksesMataKuliah = 1;  // Memberikan akses
+            fseek(fp, -(long long)sizeof(struct mahasiswa), SEEK_CUR);  // Kembali ke posisi record yang akan diupdate
+            fwrite(&info, sizeof(struct mahasiswa), 1, fp);  // Update data
+            printf("Akses diberikan ke mahasiswa dengan NIM %lld\n", nimMahasiswa);
+            getch();
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Mahasiswa dengan NIM %lld tidak ditemukan.\n", nimMahasiswa);
+    }
+
+    fclose(fp);
+}
+
+void ambilMataKuliah(long long nimMahasiswa) {
+    FILE *fp;
+    struct mahasiswa info;
+    int found = 0, i;
+
+    fp = fopen("mahasiswa_info.txt", "rb+");
+    if (fp == NULL) {
+        fprintf(stderr, "Tidak dapat membuka file mahasiswa_info.txt\n");
+        getch();
+        return;
+    }
+
+    while (fread(&info, sizeof(struct mahasiswa), 1, fp) == 1) {
+        if (info.id_mahasiswa == nimMahasiswa) {
+            if (info.aksesMataKuliah == 1) {
+                printf("Pilih mata kuliah yang ingin diambil:\n");
+                char pilihan[5][50] = {"PBO", "Kalkulus", "Dasar Pemrograman", "Basis Data", "Pemrograman Web"};
+
+                for (i = 0; i < 5; i++) {
+                    printf("%d. %s\n", i+1, pilihan[i]);
+                }
+
+                int jumlah;
+                printf("Masukkan jumlah mata kuliah yang ingin diambil (maks 5): ");
+                scanf("%d", &jumlah);
+                if (jumlah > 5) jumlah = 5;
+
+                info.jumlahMataKuliah = jumlah;
+                for (i = 0; i < jumlah; i++) {
+                    int pilihanIndex;
+                    printf("Pilih mata kuliah ke-%d: ", i+1);
+                    scanf("%d", &pilihanIndex);
+                    strcpy(info.mataKuliah[i], pilihan[pilihanIndex - 1]);
+                }
+
+                info.aksesMataKuliah = 0;  // Reset akses setelah mengambil mata kuliah
+
+                fseek(fp, -(long long)sizeof(struct mahasiswa), SEEK_CUR);
+                fwrite(&info, sizeof(struct mahasiswa), 1, fp);
+
+                printf("Mata kuliah berhasil diambil.\n");
+                getch();
+            } else {
+                printf("Akses untuk mengambil mata kuliah belum diberikan.\n");
+                getch();
+            }
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Mahasiswa dengan NIM %lld tidak ditemukan.\n", nimMahasiswa);
+        getch();
+    }
+
+    fclose(fp);
+}
+
+
+void tampilkanPilihanMataKuliah() {
+    FILE *fp;
+    struct mahasiswa info;
+    int i;
+
+    fp = fopen("mahasiswa_info.txt", "rb");
+    if (fp == NULL) {
+        fprintf(stderr, "Tidak dapat membuka file mahasiswa_info.txt\n");
+        getch();
+        return;
+    }
+
+    printf("\nDaftar Mata Kuliah yang Diambil Mahasiswa:\n");
+    while (fread(&info, sizeof(struct mahasiswa), 1, fp) == 1) {
+        if (info.jumlahMataKuliah > 0) {
+            printf("\nNIM: %lld\nNama: %s %s\nMata Kuliah yang Diambil:\n", info.id_mahasiswa, info.nama_awal, info.nama_akhir);
+            for (i = 0; i < info.jumlahMataKuliah; i++) {
+                printf("  - %s\n", info.mataKuliah[i]);
+            }
+        }
+    }
+	
+	printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+	getch();
+    fclose(fp);
 }
 
 void tambahMahasiswa() {
@@ -314,7 +537,7 @@ void tambahMahasiswa() {
     do {
         system("cls");
         printf("\t\t\t\t=====Tambah Mahasiswa=====\n");
-        fp = fopen("mahasiswa_info.txt", "a");  // Gunakan mode "ab" untuk menambah data (binary append)
+        fp = fopen("mahasiswa_info.txt", "a");
         
         if(fp == NULL) {
             fprintf(stderr, "\t\t\tTidak bisa membuka file\n");
@@ -383,6 +606,7 @@ void dataMahasiswa() {
 
     if(fp == NULL) {
         fprintf(stderr, "\t\t\t\tFile Kosong\n");
+        printf("\n\t\t\t\tTekan mana saja untuk kembali...");
         getch();  // Menunggu input dari pengguna untuk kembali
         return;
     }
@@ -777,6 +1001,62 @@ void sortirDesc() {
 	
 	getch();
 }
+
+// Fungsi untuk menampilkan profil mahasiswa berdasarkan NIM
+void profilMahasiswa() {
+    struct mahasiswa info;
+    struct login log;
+    FILE *fp, *fp2;
+    int found = 0;
+    long long nim_login;
+
+    // Membaca NIM yang telah disimpan saat registrasi
+    fp2 = fopen("nim.txt", "r");
+    if (fp2 == NULL) {
+        fprintf(stderr, "\t\t\tTidak dapat membuka file nim.txt\n");
+        return;
+    }
+
+    // Membaca NIM dari file
+    fread(&nim_login, sizeof(long long), 1, fp2);  // Membaca NIM yang disimpan
+    fclose(fp2);
+
+    // Membaca data mahasiswa dari file mahasiswa_info.txt
+    fp = fopen("mahasiswa_info.txt", "r");
+
+    printf("\t\t\t\t=====Profil Mahasiswa=====\n\n");
+
+    if(fp == NULL) {
+        fprintf(stderr, "\t\t\t\tFile Kosong\n");
+        getch();  // Menunggu input dari pengguna untuk kembali
+        return;
+    }
+
+    // Loop untuk membaca dan menampilkan data mahasiswa dari file
+    while(fread(&info, sizeof(struct mahasiswa), 1, fp)) {
+        if(nim_login2 == info.id_mahasiswa) {  // Membandingkan NIM login dengan NIM yang ada
+            found = 1;
+            printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
+            printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
+            printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
+            printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
+            printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
+            printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
+            printf("\n\t\t\t\t_____________________________________\n\n");
+            break;  // Jika ditemukan, keluar dari loop
+        }
+    }
+
+    fclose(fp);
+
+    if(found == 0) {
+        printf("\n\t\t\t\tData kosong\n");
+    }
+
+    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    getch();  // Menunggu input dari pengguna untuk kembali
+}
+
 
 
 
