@@ -52,6 +52,19 @@ void tampilkanPilihanMataKuliah();
 void approveMahasiswa();
 int cekDataMahasiswa(long long id_mahasiswa);
 
+void timeLine() {
+        printf("     ===========================================================================================================================================\n");
+        printf("     $$$$$$$\\   $$$$$$\\ $$$$$$$$\\  $$$$$$\\        $$\\      $$\\  $$$$$$\\  $$\\   $$\\  $$$$$$\\   $$$$$$\\  $$$$$$\\  $$$$$$\\  $$\\      $$\\  $$$$$$\\  \n");
+        printf("     $$  __$$\\ $$  __$$\\ __$$  __|$$  __$$\\       $$$\\    $$$ |$$  __$$\\ $$ |  $$ |$$  __$$\\ $$  __$$\\ \\_$$  _|$$  __$$\\ $$ | $\\  $$ |$$  __$$\\ \n");
+        printf("     $$ |  $$ |$$ /  $$ |  $$ |   $$ /  $$ |      $$$$\\  $$$$ |$$ /  $$ |$$ |  $$ |$$ /  $$ |$$ /  \\__|  $$ |  $$ /  \\__|$$ |$$$\\ $$ |$$ /  $$ |\n");
+        printf("     $$ |  $$ |$$$$$$$$ |  $$ |   $$$$$$$$ |      $$\\$$\\$$ $$ |$$$$$$$$ |$$$$$$$$ |$$$$$$$$ |\\$$$$$$\\    $$ |  \\$$$$$$\\  $$ $$ $$\\$$ |$$$$$$$$ |\n");
+        printf("     $$ |  $$ |$$ |  $$ |  $$ |   $$ |  $$ |      $$ |\\$  /$$ |$$ |  $$ |$$ |  $$ |$$ |  $$ | \\____$$\\   $$ |   \\____$$\\ $$$  /\\$$$$ |$$ |  $$ |\n");
+        printf("     $$$$$$$  |$$ |  $$ |  $$ |   $$ |  $$ |      $$ | \\_/ $$ |$$ |  $$ |$$ |  $$ |$$ |  $$ |$$$$$$$  |$$$$$$\\ $$$$$$$  |$$  /  \\$$$ |$$ |  $$ |\n");
+        printf("     \\_______/ \\__|  \\__|  \\__|   \\__|  \\__|      \\__|     \\__|\\__|  \\__|\\__|  \\__|\\__|  \\__|\\_______/ \\______|\\_______/ \\__/    \\__|\\__|  \\__|\n");
+        printf("     ===========================================================================================================================================\n");
+
+}
+
 // Fungsi untuk qsort ASC dan DESC berdasarkan IPK
 int bandingIPKAsc(const void *a, const void *b) {
     struct mahasiswa *mhsA = (struct mahasiswa *)a;
@@ -102,22 +115,34 @@ int main() {
 
     while (1) {  // Loop utama untuk kembali ke halaman login/register
         system("cls");
-        printf("\t\t\t\t\t=====Selamat Datang!=====\n\n");
-        printf("\n\n\n\t\t\t\t\t1. Register\n");
-        printf("\t\t\t\t\t2. Login\n\n");
-
-        printf("\t\t\t\t\tMenu yang anda pilih: ");
+        timeLine();
+        printf("\n\n\t\t\t\t\t\t\t      -----Selamat Datang!-----\n\n");
+        printf("\t\t\t\t\t\t     +-----------------------------------------+\n");
+        printf("\t\t\t\t\t\t     |\t       ----- Daftar/Masuk -----        |\n");
+        printf("\t\t\t\t\t\t     +-----------------------------------------+\n");
+        printf("\t\t\t\t\t\t     |                                         |\n");
+        printf("\t\t\t\t\t\t     |            1. Daftar Akun               |\n");
+        printf("\t\t\t\t\t\t     |            2. Masuk Akun                |\n");
+        printf("\t\t\t\t\t\t     |                                         |\n");
+        printf("\t\t\t\t\t\t     |                                         |\n");
+        printf("\t\t\t\t\t\t     |-----------------------------------------|\n");
+        printf("\t\t\t\t\t\t     |   3. Tentang Kami         0. Keluar     |\n");
+        printf("\t\t\t\t\t\t     +-----------------------------------------+\n");
+        printf("\t\t\t\t\t\t\t     ---------------------------\n");
+        printf("\t\t\t\t\t\t\t        Menu yang anda pilih: ");
         scanf("%d", &opt);
 
         if (opt == 1) {  // Bagian registrasi
             do {
                 system("cls");
-                printf("\t\t\t\t\t=====Silakan Register=====\n\n");
+                timeLine();
 
-                printf("\t\t\t\t\tMasukkan username\t : ");
+                printf("\n\n\t\t\t\t\t\t\t+----------------------------------+\n");
+                printf("\t\t\t\t\t\t\t|\t ----- DAFTAR -----        |\n");
+                printf("\t\t\t\t\t\t\t+----------------------------------+\n");
+                printf("\t\t\t\t\t\t\t Masukkan username\t: ");
                 scanf("%s", info.username);
-
-                printf("\n\t\t\t\t\tPilih peran:\n\t\t\t\t\t(D) Dosen / (M) Mahasiswa: ");
+                printf("\n\t\t\t\t\t\t\t Pilih peran:\n\t\t\t\t\t\t\t (D) Dosen / (M) Mahasiswa: ");
                 scanf(" %c", &info.role);
                 getchar();
 
@@ -125,11 +150,11 @@ int main() {
                 	// Membuka file nim.txt dalam mode append biner
     				fp2 = fopen("nim.txt", "ab");
 				    if (fp2 == NULL) {
-				        fprintf(stderr, "\t\t\tTidak dapat membuka file nim.txt\n");
+				        fprintf(stderr, "\t\t\t\t\t\t\tTidak dapat membuka file nim.txt\n");
 				        return;
 				    }
 
-				    printf("\n\t\t\t\t\tMasukkan NIM\t\t : ");
+				    printf("\n\t\t\t\t\t\t\t Masukkan NIM\t\t: ");
 				    scanf("%lld", &reg.nim);  // Input NIM dari mahasiswa
 
 				    // Menulis NIM yang terdaftar ke file nim.txt
@@ -138,29 +163,30 @@ int main() {
 				    fclose(fp2);  // Menutup file nim.txt
 				}
 
-                printf("\t\t\t\t\tMasukkan password\t : ");
+                printf("\n\t\t\t\t\t\t\t Masukkan password\t: ");
                 inputPassword(info.password);
                 printf("\n");
+
 
                 strcpy(filename, info.username);
                 fp = fopen(strcat(filename, ".dat"), "w");
                 if (fp != NULL) {
                     fwrite(&info, sizeof(struct mahasiswa), 1, fp);
-                    printf("\t\t\t\t ________________________________________\n");
-                    printf("\n\t\t\t\t\tAkun berhasil terdaftar\n");
+                    printf("\t\t\t\t\t\t\t-------------------------------------\n");
+                    printf("\t\t\t\t\t\t\t Akun berhasil terdaftar\n");
                     fclose(fp);
                     getch();
                     break;  // Keluar dari loop registrasi setelah berhasil
                 } else {
-                    printf("\n\t\t\t\t\tAkun gagal terdaftar\n");
+                    printf("\t\t\t\t\t\t\t Akun gagal terdaftar\n");
                     Beep(800, 300);
                 }
 
-                printf("\n\t\t\t\t\tRegistrasi Berhasil. Silakan Login? (y/n): ");
+                printf("\n\t\t\t\t\t\t\t Registrasi Berhasil. Silakan Login? (y/n): ");
                 scanf(" %c", &cont);
 
                 if (cont == 'n' || cont == 'N') {
-                    printf("\n\t\t\t\t\tTerima kasih telah menggunakan aplikasi kami.\n");
+                    printf("\n\t\t\t\t\t\t\t Terima kasih telah menggunakan aplikasi kami.\n");
                     exit(0);
                 }
             } while (cont == 'y' || cont == 'Y');
@@ -173,24 +199,27 @@ int main() {
             int login_attempts = 0;
             do {
                 system("cls");
-                printf("\t\t\t\t\t=====Silakan Login=====\n\n");
+                timeLine();
 
-                printf("\t\t\t\t\tLogin sebagai:\n\t\t\t\t\t(D) Dosen / (M) Mahasiswa: ");
+                printf("\n\n\t\t\t\t\t\t\t+---------------------------------+\n");
+                printf("\t\t\t\t\t\t\t|\t ----- MASUK -----        |\n");
+                printf("\t\t\t\t\t\t\t+---------------------------------+\n");
+                printf("\t\t\t\t\t\t\t Masuk sebagai:\n\t\t\t\t\t\t\t (D) Dosen / (M) Mahasiswa: ");
                 scanf(" %c", &info.role);
                 getchar();
 
                 if(info.role == 'm' || info.role == 'M') {
-	                printf("\n\t\t\t\t\tMasukkan nim\t: ");
+	                printf("\n\t\t\t\t\t\t\t Masukkan NIM\t   : ");
 	                scanf("%lld", &log.nim);
 
 	                nim_login2 = log.nim;
 				}
 
-                printf("\n\t\t\t\t\tMasukkan username\t: ");
+                printf("\n\t\t\t\t\t\t\t Masukkan username : ");
                 scanf("%s", username);
 
 
-                printf("\n\t\t\t\t\tMasukkan password\t: ");
+                printf("\n\t\t\t\t\t\t\t Masukkan password : ");
                 inputPassword(password);
                 printf("\n");
 
@@ -198,7 +227,8 @@ int main() {
                 fp = fopen(strcat(filename, ".dat"), "r");
 
                 if (fp == NULL) {
-                    printf("\n\t\t\t\t\tAkun tidak terdaftar, silakan registrasi\n");
+                    printf("\t\t\t\t\t\t\t-------------------------------------\n");
+                    printf("\n\t\t\t\t\t\t\t Akun tidak terdaftar, silakan registrasi!\n");
                     getch();
                     opt = 1; // untuk pergi ke opsi 1 -> registrasi
                     break;
@@ -210,16 +240,17 @@ int main() {
                         cont = 'y';
                         break; // Keluar dari loop jika login berhasil
                     } else {
-                        printf("\n\t\t\t\t\tPassword salah\n");
+                        printf("\t\t\t\t\t\t\t-------------------------------------\n");
+                        printf("\n\t\t\t\t\t\t\t Password salah\n");
                     }
                 }
 
                 login_attempts++;
-                printf("\n\t\t\t\t\tLogin gagal. Coba lagi? (y/n): ");
+                printf("\n\t\t\t\t\t\t\t Login gagal. Coba lagi? (y/n): ");
                 scanf(" %c", &cont);
 
                 if (cont == 'n' || cont == 'N') {
-                    printf("\n\t\t\t\t\tTerima kasih telah menggunakan aplikasi kami.\n");
+                    printf("\n\t\t\t\t\t\t\t Terima kasih telah menggunakan aplikasi kami.\n");
                     exit(0);
                 }
             } while (cont == 'y' || cont == 'Y');
@@ -231,43 +262,63 @@ int main() {
             // Bagian program utama jika login berhasil
             while (cont == 'y') {
                 system("cls");
-                printf("\t\t\t\t=====SELAMAT DATANG DI DATABASE MAHASISWA=====\n\n");
+                timeLine();
+                printf("\n\t\t\t\t\t\t\t=====SELAMAT DATANG DI DATABASE MAHASISWA=====\n\n");
 
                 if(info.role == 'D' || info.role == 'd') {
-	                printf("\n\n\n\t\t\t\t1. Konfirmasi Data Mahasiswa\n");
-		            printf("\t\t\t\t2. Data Seluruh Mahasiswa\n");
-		            printf("\t\t\t\t3. Cari Data Mahasiswa\n");
-		            printf("\t\t\t\t4. Hapus Data Mahasiswa\n");
-		            printf("\t\t\t\t5. Edit Data Mahasiswa\n");
-		            printf("\t\t\t\t6. Hapus Semua Data Mahasiswa\n");
-		            printf("\t\t\t\t7. Sortir IPK Mahasiswa (ASC)\n");
-		            printf("\t\t\t\t8. Sortir IPK Mahasiswa (DESC)\n");
-		            printf("\t\t\t\t9. Berikan akses mata kuliah\n");
-		            printf("\t\t\t\t10. Tentang Kami\n");
-		            printf("\t\t\t\t11. Tampilkan Pilihan Mata Kuliah\n");
-		            printf("\t\t\t\t12. Kembali ke halaman Regist/Login\n");
-		            printf("\t\t\t\t0. Keluar\n");
-		            printf("\t\t\t\t ________________________________________\n");
-					menuDosen();
+                    printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+                    printf("\t\t\t\t\t\t\t|\t     ----- MENU -----            |\n");
+                    printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+	                printf("\t\t\t\t\t\t\t|   1. Konfirmasi Data Mahasiswa         |\n");
+		            printf("\t\t\t\t\t\t\t|   2. Data Seluruh Mahasiswa            |\n");
+		            printf("\t\t\t\t\t\t\t|   3. Cari Data Mahasiswa               |\n");
+		            printf("\t\t\t\t\t\t\t|   4. Hapus Data Mahasiswa              |\n");
+		            printf("\t\t\t\t\t\t\t|   5. Edit Data Mahasiswa               |\n");
+		            printf("\t\t\t\t\t\t\t|   6. Hapus Semua Data Mahasiswa        |\n");
+		            printf("\t\t\t\t\t\t\t|   7. Sortir IPK Mahasiswa (ASC)        |\n");
+		            printf("\t\t\t\t\t\t\t|   8. Sortir IPK Mahasiswa (DESC)       |\n");
+		            printf("\t\t\t\t\t\t\t|   9. Berikan akses mata kuliah         |\n");
+		            printf("\t\t\t\t\t\t\t|   10. Tampilkan Pilihan Mata Kuliah    |\n");
+		            printf("\t\t\t\t\t\t\t|   0. Keluar                            |\n");
+		            printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+		            printf("\t\t\t\t\t\t\t       ---------------------------\n");
+                    printf("\t\t\t\t");menuDosen();
 				} else if(info.role == 'M' || info.role == 'm') {
-					printf("\n\n\n\t\t\t\t1. Tambah Mahasiswa\n");
-					printf("\t\t\t\t2. Cari Data Mahasiswa\n");
-					printf("\t\t\t\t3. Ambil mata kuliah\n");
-					printf("\t\t\t\t4. Sortir IPK Mahasiswa (ASC)\n");
-		            printf("\t\t\t\t5. Sortir IPK Mahasiswa (DESC)\n");
-		            printf("\t\t\t\t6. Tentang Kami\n");
-		            printf("\t\t\t\t7. Profil Mahasiswa\n");
-		            printf("\t\t\t\t8. Kembali ke halaman Regist/Login\n");
-		            printf("\t\t\t\t0. Keluar\n");
-		            printf("\t\t\t\t ________________________________________\n");
-		            menuMahasiswa();
+                    printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+                    printf("\t\t\t\t\t\t\t|\t     ----- MENU -----            |\n");
+                    printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+                    printf("\t\t\t\t\t\t\t|   1. Tambah Mahasiswa                  |\n");
+		            printf("\t\t\t\t\t\t\t|   2. Cari Data Mahasiswa               |\n");
+		            printf("\t\t\t\t\t\t\t|   3. Ambil mata kuliah                 |\n");
+		            printf("\t\t\t\t\t\t\t|   4. Profil Mahasiswa                  |\n");
+		            printf("\t\t\t\t\t\t\t|   0. Keluar                            |\n");
+		            printf("\t\t\t\t\t\t\t+----------------------------------------+\n");
+                    printf("\t\t\t\t\t\t\t       ---------------------------\n");
+		            printf("\t\t\t\t"); menuMahasiswa();
 				} else {
-					printf("Peran tidak valid. Program dihentikan.\n");
+					printf("\t\t\t\t\t\t\tPeran tidak valid. Program dihentikan.\n");
 					break;
 				}
 
             }
+
         } // end if
+
+        if (opt == 3) {
+                system("cls");
+                tentangKami();
+                system("cls");
+            }
+
+        if (opt == 0) {
+                system("cls");
+                printf("\n\n\n\n\n\t\t\t\t\t\t Terima kasih telah menggunakan aplikasi kami...\n\n");
+                exit(0);
+            }
+            else {
+                printf("\n\n\t\t\t\t\t\t     Pilihan tidak valid. Pilih opsi yang sesuai!");
+            }
+            getch();
     }
     return 0;
 }
@@ -282,75 +333,76 @@ void menuDosen() {
 	switch (menu) {
 	    case 1:
 	        system("cls");
+	        timeLine();
 	        approveMahasiswa();
             system("cls");
 	        break;
 	    case 2:
 			system("cls");
+			timeLine();
 	        dataMahasiswa();
 	    	system("cls");
         	break;
 	    case 3:
 	        system("cls");
+	        timeLine();
 			cariMahasiswa();
 			system("cls");
 			break;
 		case 4:
 			system("cls");
+			timeLine();
 			hapusMahasiswa();
 			system("cls");
 			break;
 		case 5:
 			system("cls");
+			timeLine();
 			editMahasiswa();
 			system("cls");
 			break;
 		case 6:
 			system("cls");
+			timeLine();
 			hapusSemua();
 			system("cls");
 			break;
 		case 7:
 			system("cls");
+			timeLine();
 			sortirAsc();
 			system("cls");
 			break;
 	    case 8:
 			system("cls");
+			timeLine();
 			sortirDesc();
 			system("cls");
 			break;
 		case 9:
 			system("cls");
-			printf("Masukkan NIM Mahasiswa untuk diberikan akses: ");
+			timeLine();
+			printf("\n\n\t\t\t\t\t\t Masukkan NIM Mahasiswa untuk diberikan akses: ");
             scanf("%lld", &nim);
             berikanAksesMataKuliah(nim);
 			system("cls");
 			break;
 		case 10:
 			system("cls");
-			tentangKami();
-			system("cls");
-			break;
-		case 11:
-			system("cls");
+			timeLine();
 			tampilkanPilihanMataKuliah();
 			system("cls");
 			break;
-        case 12:
+        case 0:
             system("cls");
 			main();
 			system("cls");
 			break;
-		case 0:
-			system("cls");
-			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
-			exit(0);
-			break;
 		default:
 			system("cls");
-			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
-			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			timeLine();
+			printf("\n\t\t\t\t\t\t\t Masukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\t\t\t\t Tekan mana saja untuk kembali...\n");
 			getch();
 			system("cls");
 			break;
@@ -367,55 +419,39 @@ void menuMahasiswa() {
 	switch (menu) {
 		case 1:
 	        system("cls");
+	        timeLine();
 	        tambahMahasiswa();
             system("cls");
 	        break;
 	    case 2:
 	        system("cls");
+	        timeLine();
 	        cariMahasiswa();
             system("cls");
 	        break;
 	    case 3:
 	        system("cls");
-	        printf("Masukkan NIM Anda: ");
+	        timeLine();
+	        printf("\n\t\t\t\t\t\t\t Masukkan NIM Anda: ");
             scanf("%lld", &nim);
             ambilMataKuliah(nim);
             system("cls");
 	        break;
-	    case 4:
+		case 4:
 			system("cls");
-	        sortirAsc();
-	    	system("cls");
-        	break;
-	    case 5:
-	        system("cls");
-			sortirDesc();
-			system("cls");
-			break;
-		case 6:
-			system("cls");
-			tentangKami();
-			system("cls");
-			break;
-		case 7:
-			system("cls");
+			timeLine();
 			profilMahasiswa();
             system("cls");
             break;
-        case 8:
+        case 0:
 			system("cls");
 			main();
             system("cls");
             break;
-		case 0:
-			system("cls");
-			printf("\n\t\t\t\tTerima kasih, telah menggunakan aplikasi kami\n\n");
-			exit(0);
-			break;
 		default:
 			system("cls");
-			printf("\n\t\t\t\tMasukkan menu yang terdaftar\n\n");
-			printf("\n\t\t\t\tTekan mana saja untuk kembali...\n");
+			printf("\n\t\t\t\t\t\t\t Masukkan menu yang terdaftar\n\n");
+			printf("\n\t\t\t\t\t\t\t Tekan mana saja untuk kembali...\n");
 			getch();
 			system("cls");
 			break;
@@ -430,7 +466,7 @@ void berikanAksesMataKuliah(long long nimMahasiswa) {
 
     fp = fopen("mahasiswa_info.txt", "r+");  // Membuka file dalam mode baca dan tulis
     if (fp == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file mahasiswa_info.txt\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t Tidak dapat membuka file mahasiswa_info.txt\n");
         getch();
         return;
     }
@@ -438,7 +474,7 @@ void berikanAksesMataKuliah(long long nimMahasiswa) {
     // Membuka file untuk menyimpan mahasiswa yang diberikan akses
     fpAkses = fopen("mahasiswa_akses.txt", "a");  // Mode 'a' untuk menambahkan data baru
     if (fpAkses == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file mahasiswa_akses.txt\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t Tidak dapat membuka file mahasiswa_akses.txt\n");
         fclose(fp);
         getch();
         return;
@@ -468,9 +504,9 @@ void berikanAksesMataKuliah(long long nimMahasiswa) {
                         info.ipk,
                         info.aksesMataKuliah);
 
-                printf("Akses diberikan ke mahasiswa dengan NIM %lld\n", nimMahasiswa);
+                printf("\n\t\t\t\t\t\t Akses diberikan ke mahasiswa dengan NIM %lld\n\n", nimMahasiswa);
                 found = 1;
-                getch();
+
         }
     }
 
@@ -478,11 +514,12 @@ void berikanAksesMataKuliah(long long nimMahasiswa) {
     fclose(fpAkses);
 
     if (!found) {
-        printf("Mahasiswa dengan NIM %lld tidak ditemukan.\n", nimMahasiswa);
-        getch();
+        printf("\n\t\t\t\t\t\t Mahasiswa dengan NIM %lld tidak ditemukan.\n\n", nimMahasiswa);
+
     }
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...\n");
+    printf("\t\t\t\t\t\t -----------------------------------------\n");
+    printf("\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     getch();
 }
 
@@ -495,7 +532,7 @@ void ambilMataKuliah(long long nimMahasiswa) {
     // Membuka file mahasiswa_akses.txt untuk membaca
     fp = fopen("mahasiswa_akses.txt", "r");
     if (fp == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file mahasiswa_akses.txt\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t\t Tidak dapat membuka file mahasiswa_akses.txt\n");
         getch();
         return;
     }
@@ -503,7 +540,7 @@ void ambilMataKuliah(long long nimMahasiswa) {
     // Membuka file sementara untuk menyimpan perubahan
     fpTemp = fopen("mahasiswa_akses_temp.txt", "w");
     if (fpTemp == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file sementara.\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t\t Tidak dapat membuka file sementara.\n");
         fclose(fp);
         getch();
         return;
@@ -512,7 +549,7 @@ void ambilMataKuliah(long long nimMahasiswa) {
     // File untuk menyimpan mata kuliah yang diambil
     fpMataKuliah = fopen("mahasiswa_mata_kuliah.txt", "a");
     if (fpMataKuliah == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file mahasiswa_mata_kuliah.txt\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t\t Tidak dapat membuka file mahasiswa_mata_kuliah.txt\n");
         fclose(fp);
         fclose(fpTemp);
         getch();
@@ -532,22 +569,23 @@ void ambilMataKuliah(long long nimMahasiswa) {
                   &info.aksesMataKuliah) == 9) {
         if (info.id_mahasiswa == nimMahasiswa) {
             if (info.aksesMataKuliah == 1) {
-                printf("Pilih mata kuliah yang ingin diambil:\n");
+                printf("\t\t\t\t\t\t\t------------------------------------------\n");
+                printf("\t\t\t\t\t\t\t Pilih mata kuliah yang ingin diambil:\n");
                 char pilihan[5][50] = {"PBO", "Kalkulus", "Dasar Pemrograman", "Basis Data", "Pemrograman Web"};
 
                 for (i = 0; i < 5; i++) {
-                    printf("%d. %s\n", i + 1, pilihan[i]);
+                    printf("\t\t\t\t\t\t\t %d. %s\n", i + 1, pilihan[i]);
                 }
 
                 int jumlah;
-                printf("Masukkan jumlah mata kuliah yang ingin diambil (maks 5): ");
+                printf("\t\t\t\t\t\t\t Masukkan jumlah mata kuliah yang ingin diambil (maks 5): ");
                 scanf("%d", &jumlah);
                 if (jumlah > 5) jumlah = 5;
 
                 info.jumlahMataKuliah = jumlah;
                 for (i = 0; i < jumlah; i++) {
                     int pilihanIndex;
-                    printf("Pilih mata kuliah ke-%d: ", i + 1);
+                    printf("\n\t\t\t\t\t\t\t Pilih mata kuliah ke-%d: ", i + 1);
                     scanf("%d", &pilihanIndex);
                     strcpy(info.mataKuliah[i], pilihan[pilihanIndex - 1]);
 
@@ -556,10 +594,9 @@ void ambilMataKuliah(long long nimMahasiswa) {
                 }
 
                 info.aksesMataKuliah = 0; // Reset akses setelah mengambil mata kuliah
-                printf("Mata kuliah berhasil diambil.\n");
-                getch();
+                printf("\n\t\t\t\t\t\t\t Mata kuliah berhasil diambil.\n");
             } else {
-                printf("Akses untuk mengambil mata kuliah belum diberikan.\n");
+                printf("\n\t\t\t\t\t\t\t Akses untuk mengambil mata kuliah belum diberikan.\n");
                 getch();
             }
             found = 1;
@@ -583,14 +620,14 @@ void ambilMataKuliah(long long nimMahasiswa) {
     fclose(fpMataKuliah);
 
     if (found == 0) {
-        printf("Mahasiswa dengan NIM %lld tidak ditemukan.\n", nimMahasiswa);
+        printf("\n\t\t\t\t\t\t\t Mahasiswa dengan NIM %lld tidak ditemukan.\n", nimMahasiswa);
         remove("mahasiswa_akses_temp.txt"); // Menghapus file sementara jika tidak ditemukan
     } else {
         remove("mahasiswa_akses.txt"); // Menghapus file lama
         rename("mahasiswa_akses_temp.txt", "mahasiswa_akses.txt"); // Mengganti nama file sementara menjadi file asli
     }
-
-    printf("\t\t\t\tTekan mana saja untuk kembali...\n");
+    printf("\n\n\t\t\t\t\t\t\t -----------------------------------------\n");
+    printf("\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     getch();
 }
 
@@ -606,11 +643,11 @@ void tampilkanPilihanMataKuliah() {
     // Membuka file mahasiswa_mata_kuliah.txt
     fp = fopen("mahasiswa_mata_kuliah.txt", "r");
     if (fp == NULL) {
-        fprintf(stderr, "Tidak dapat membuka file mahasiswa_mata_kuliah.txt\n");
+        fprintf(stderr, "\n\t\t\t\t\t\t\t Tidak dapat membuka file mahasiswa_mata_kuliah.txt\n");
         return;
     }
 
-    printf("\nDaftar Mata Kuliah yang Diambil Mahasiswa:\n");
+    printf("\n\t\t\t\t\t\t\t Daftar Mata Kuliah yang Diambil Mahasiswa:\n");
 
     while (fgets(line, sizeof(line), fp)) {
         long long nim;
@@ -623,17 +660,19 @@ void tampilkanPilihanMataKuliah() {
                 if (nimTerakhir != 0) {
                     printf("\n"); // Spasi untuk memisahkan data mahasiswa
                 }
-                printf("\nNIM: %lld\nNama: %s\nMata Kuliah yang Diambil:\n", nim, nama);
+                printf("\t\t\t\t\t\t\t--------------------------------------------\n");
+                printf("\n\t\t\t\t\t\t\t NIM: %lld\n\t\t\t\t\t\t\t Nama: %s\n\t\t\t\t\t\t\t Mata Kuliah yang Diambil:\n", nim, nama);
                 nimTerakhir = nim;
                 strcpy(namaTerakhir, nama);
             }
 
             // Tampilkan mata kuliah
-            printf("  - %s\n", mataKuliah);
+            printf("\t\t\t\t\t\t\t  - %s\n", mataKuliah);
         }
     }
 
-    printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\n\t\t\t\t\t\t\t--------------------------------------------\n");
+    printf("\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     fclose(fp);
     getch();
 }
@@ -648,7 +687,7 @@ int cekDataMahasiswa(long long id_mahasiswa) {
     // Cek di file data final
     fp = fopen("mahasiswa_info.txt", "r");
     if (fp != NULL) {
-        while (fscanf(fp, "%lld|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%f\n",
+        while (fscanf(fp, " %lld|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%f\n",
                       &info.id_mahasiswa,
                       info.nama_awal,
                       info.nama_akhir,
@@ -693,56 +732,58 @@ void tambahMahasiswa() {
     struct mahasiswa info;
 
     	system("cls");
-        printf("\t\t\t\t=====Tambah Mahasiswa=====\n");
+    	printf("\n\n\t\t\t\t\t\t   +---------------------------------------------+\n");
+        printf("\t\t\t\t\t\t            ----- Tambah Mahasiswa -----\n");
+        printf("\t\t\t\t\t\t   +---------------------------------------------+\n");
 
-        printf("\n\t\t\tMasukkan NIM: ");
+        printf("\n\t\t\t\t\t\t     Masukkan NIM\t   : ");
         scanf("%lld", &info.id_mahasiswa);
         getchar();  // Membersihkan newline setelah scanf
 
         // Cek apakah data sudah ada
 	    if (cekDataMahasiswa(info.id_mahasiswa)) {
-	        printf("\n\t\t\tData dengan NIM ini sudah pernah ditambahkan.\n");
+	        printf("\n\t\t\t\t\t\t     Data dengan NIM ini sudah pernah ditambahkan.\n");
 	        getch();
 	        return; // Keluar dari fungsi jika data sudah ada
 	    }
 
-        printf("\n\t\t\tMasukkan Nama Awal: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Nama Awal\t   : ");
         scanf("%s", info.nama_awal);
         getchar();
 
-        printf("\n\t\t\tMasukkan Nama Akhir: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Nama Akhir   : ");
         scanf("%s", info.nama_akhir);
         getchar();
 
 
-        printf("\n\t\t\tMasukkan Kelas: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Kelas\t   : ");
         fgets(info.kelas, sizeof(info.kelas), stdin);
         fflush(stdin);
         info.kelas[strcspn(info.kelas, "\n")] = '\0';  // Hapus newline
 
-        printf("\n\t\t\tMasukkan Alamat: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Alamat\t   : ");
         fgets(info.alamat, sizeof(info.alamat), stdin);
         fflush(stdin);
         info.alamat[strcspn(info.alamat, "\n")] = '\0';  // Hapus newline
 
-        printf("\n\t\t\tMasukkan Fakultas: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Fakultas\t   : ");
         fgets(info.fakultas, sizeof(info.fakultas), stdin);
         fflush(stdin);
         info.fakultas[strcspn(info.fakultas, "\n")] = '\0';  // Hapus newline
 
-        printf("\n\t\t\tMasukkan Prodi: ");
+        printf("\n\t\t\t\t\t\t     Masukkan Prodi\t   : ");
         fgets(info.prodi, sizeof(info.prodi), stdin);
         fflush(stdin);
         info.prodi[strcspn(info.prodi, "\n")] = '\0';  // Hapus newline
 
-        printf("\n\t\t\tMasukkan IPK: ");
+        printf("\n\t\t\t\t\t\t     Masukkan IPK\t   : ");
         scanf("%f", &info.ipk);
         getchar();  // Membersihkan newline setelah scanf
 
         // Simpan data ke file pending
 	    fp = fopen("data_pending.txt", "a");
 	    if (fp == NULL) {
-	        fprintf(stderr, "\t\t\tTidak bisa membuka file\n");
+	        fprintf(stderr, "\t\t\t\t\t\t Tidak bisa membuka file\n");
 	        getch();
 	        return;
 	    }
@@ -760,7 +801,9 @@ void tambahMahasiswa() {
 
 	    fclose(fp); // Tutup file
 
-        printf("\n\t\t\tBerhasil menambahkan data Mahasiswa\n");
+	    printf("\t\t\t\t\t\t-----------------------------------------\n");
+        printf("\t\t\t\t\t\t Berhasil menambahkan data Mahasiswa\n");
+        printf("\n\t\t\t\t\t\t Tekan mana saja untuk kembali...");
         getch();
 }
 
@@ -770,19 +813,20 @@ void approveMahasiswa() {
     char persetujuan;
     int approved_count = 0, rejected_count = 0;
 
-    system("cls");
-    printf("\t\t\t\t===== Persetujuan Data Mahasiswa =====\n");
+
+    printf("\n\n\t\t\t\t\t\t\t ===== Persetujuan Data Mahasiswa =====\n");
 
     fp_pending = fopen("data_pending.txt", "r");
     if (fp_pending == NULL) {
-        printf("\n\t\t\tTidak ada data pending untuk disetujui\n");
+        printf("\n\t\t\t\t\t\t\t Tidak ada data pending untuk disetujui\n");
+        getch();
         return;
     }
 
     fp_approved = fopen("mahasiswa_info.txt", "a");
     if (fp_approved == NULL) {
         fclose(fp_pending);
-        fprintf(stderr, "\t\t\tTidak bisa membuka file mahasiswa_info.txt\n");
+        fprintf(stderr, "\t\t\t\t\t\t\t Tidak bisa membuka file mahasiswa_info.txt\n");
         return;
     }
 
@@ -798,16 +842,16 @@ void approveMahasiswa() {
                   &info.ipk) == 8) {
 
         // Tampilkan data mahasiswa
-        printf("\n\t\t\tNama: %s %s", info.nama_awal, info.nama_akhir);
-        printf("\n\t\t\tNIM: %lld", info.id_mahasiswa);
-        printf("\n\t\t\tKelas: %s", info.kelas);
-        printf("\n\t\t\tAlamat: %s", info.alamat);
-        printf("\n\t\t\tFakultas: %s", info.fakultas);
-        printf("\n\t\t\tProdi: %s", info.prodi);
-        printf("\n\t\t\tIPK: %.2f", info.ipk);
+        printf("\n\t\t\t\t\t\t\t Nama\t\t: %s %s", info.nama_awal, info.nama_akhir);
+        printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info.id_mahasiswa);
+        printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info.kelas);
+        printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info.alamat);
+        printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info.fakultas);
+        printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info.prodi);
+        printf("\n\t\t\t\t\t\t\t IPK\t\t: %.2f", info.ipk);
 
         // Meminta persetujuan
-        printf("\n\n\t\t\tSetujui data ini? (y/T): ");
+        printf("\n\n\t\t\t\t\t\t\t Setujui data ini? (Y/T): ");
         scanf(" %c", &persetujuan);
 
         if (persetujuan == 'y' || persetujuan == 'Y') {
@@ -833,9 +877,9 @@ void approveMahasiswa() {
     // Hapus file pending setelah proses persetujuan
     remove("data_pending.txt");
 
-    printf("\n\t\t\tProses selesai. %d disetujui, %d ditolak.\n", approved_count, rejected_count);
+    printf("\n\t\t\t\t\t\t\t Proses selesai. \n\t\t\t\t\t\t\t %d disetujui, %d ditolak.\n", approved_count, rejected_count);
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\n\n\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     getch();  // Menunggu input dari pengguna untuk kembali
 }
 
@@ -848,11 +892,10 @@ void dataMahasiswa() {
 
     fp = fopen("mahasiswa_info.txt", "r");  // Membuka file dalam mode baca teks
 
-    printf("\t\t\t\t=====Data Mahasiswa=====\n\n");
 
     if(fp == NULL) {
-        fprintf(stderr, "\t\t\t\tFile Kosong\n");
-        printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+        fprintf(stderr, "\n\n\t\t\t\t\t\t         File Kosong.\n");
+        printf("\n\t\t\t\t\t\t      Tekan mana saja untuk kembali...");
         getch();  // Menunggu input dari pengguna untuk kembali
         return;
     }
@@ -868,23 +911,26 @@ void dataMahasiswa() {
                   info.prodi,
                   &info.ipk) == 8) {
         found = 1;
-        printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
-        printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
-        printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
-        printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
-        printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
-        printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
-        printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
-        printf("\n\t\t\t\t_____________________________________\n\n");
+        printf("\n\n\t\t\t\t\t\t    +----------------------------------------+\n");
+        printf("\t\t\t\t\t\t    |      ----- Daftar Mahasiswa -----      |\n");
+        printf("\t\t\t\t\t\t    +----------------------------------------+\n");
+        printf("\t\t\t\t\t\t      Nama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
+        printf("\n\t\t\t\t\t\t      NIM\t\t: %lld", info.id_mahasiswa);
+        printf("\n\t\t\t\t\t\t      Kelas\t\t: %s", info.kelas);
+        printf("\n\t\t\t\t\t\t      Alamat\t\t: %s", info.alamat);
+        printf("\n\t\t\t\t\t\t      Fakultas\t\t: %s", info.fakultas);
+        printf("\n\t\t\t\t\t\t      Prodi\t\t: %s", info.prodi);
+        printf("\n\t\t\t\t\t\t      IPK\t\t: %.2f", info.ipk);
+        printf("\n\t\t\t\t\t\t     ----------------------------------------\n");
     }
 
     fclose(fp);
 
     if(found == 0) {
-		printf("\n\t\t\t\tData kosong\n");
+		printf("\n\t\t\t\t\t\t     Data kosong\n");
 	}
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\t\t\t\t\t\t     Tekan mana saja untuk kembali...");
     getch();  // Menunggu input dari pengguna untuk kembali
 }
 
@@ -898,17 +944,16 @@ void cariMahasiswa() {
 	long long nim;
 
 	fp = fopen("mahasiswa_info.txt", "r");
-
-	printf("\t\t\t\t=====Cari Data Mahasiswa=====\n\n");
+	printf("\n\t\t\t\t\t\t\t    =====Cari Data Mahasiswa=====\n\n");
 
 	if (fp == NULL) {
-        fprintf(stderr, "\n\t\t\tFile tidak ditemukan atau kosong.\n");
-        printf("\n\t\t\tTekan mana saja untuk kembali...");
+        fprintf(stderr, "\n\t\t\t\t\t\t\t    File tidak ditemukan atau kosong.\n");
+        printf("\n\t\t\t\t\t\t\t    Tekan mana saja untuk kembali...");
         getch();
         return;
     }
 
-	printf("\t\t\tMasukkan NIM: ");
+	printf("\t\t\t\t\t\t\t    Masukkan NIM: ");
 	scanf("%lld", &nim);
 
 	while (fscanf(fp, "%lld|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%[^|]|%f\n",
@@ -923,22 +968,26 @@ void cariMahasiswa() {
         if (info.id_mahasiswa == nim) {
             found = 1;
 
-            printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
-            printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
-            printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
-            printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
-            printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
-            printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
-            printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
-            printf("\n\t\t\t\t_____________________________________\n\n");
+            printf("\n\t\t\t\t\t\t\t+------------------------------------+\n");
+            printf("\t\t\t\t\t\t        |     ----- Data Mahasiswa -----     |\n");
+            printf("\t\t\t\t\t\t\t+------------------------------------+\n");
+            printf("\t\t\t\t\t\t\t Nama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
+            printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info.id_mahasiswa);
+            printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info.kelas);
+            printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info.alamat);
+            printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info.fakultas);
+            printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info.prodi);
+            printf("\n\t\t\t\t\t\t\t IPK\t\t: %.2f", info.ipk);
+            printf("\n\t\t\t\t\t\t\t______________________________________\n\n");
         }
     }
 
 	if(found == 0) {
-		printf("\n\t\t\t\tData tidak ditemukan!\n");
+		printf("\n\t\t\t\t\t\t\t    Data tidak ditemukan!\n");
 	}
 
-	printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+	printf("\t\t\t\t\t\t\t    ----------------------------------------\n");
+	printf("\n\t\t\t\t\t\t\t     Tekan mana saja untuk kembali...");
 	getch();
 }
 
@@ -949,17 +998,17 @@ void hapusMahasiswa() {
 	long long nim;
 	char konfirm;
 
-	printf("\t\t\t\t=====Hapus Data Mahasiswa=====\n\n");
+	printf("\n\t\t\t\t\t\t\t =====Hapus Data Mahasiswa=====\n\n");
 	fp = fopen("mahasiswa_info.txt", "r");
     fp1 = fopen("temp.txt", "w");
 
 	if(fp == NULL || fp1 == NULL) {
-		fprintf(stderr, "\t\t\tData tidak ditemukan.\n");
+		fprintf(stderr, "\t\t\t\t\t\t\t Data tidak ditemukan.\n");
 		getch();
 		return;
 	}
 
-	printf("\t\t\tMasukkan NIM: ");
+	printf("\t\t\t\t\t\t\t Masukkan NIM: ");
 	scanf("%lld", &nim);
 
 
@@ -992,22 +1041,22 @@ void hapusMahasiswa() {
 	fclose(fp1);
 
 	if(found == 1) {
-		printf("\n\t\t\t\tYakin ingin menghapus? [Y/T]: ");
+		printf("\n\t\t\t\t\t\t\t Yakin ingin menghapus? [Y/T]: ");
     	scanf(" %c", &konfirm);
 		if( konfirm == 'Y' || konfirm == 'y' ) {
 			remove("mahasiswa_info.txt");
 			rename("temp.txt", "mahasiswa_info.txt");
-			printf("\n\t\t\t\t______________________________");
-			printf("\n\t\t\t\tData berhasil dihapus\n");
+			printf("\n\t\t\t\t\t\t\t ______________________________");
+			printf("\n\t\t\t\t\t\t\t Data berhasil dihapus\n");
 		} else {
-			printf("\n\t\t\t\tGagal menghapus data\n");
+			printf("\n\t\t\t\t\t\t\t Gagal menghapus data\n");
 		}
 
 	} else {
-		printf("\n\t\t\t\tData tidak ditemukan\n");
+		printf("\n\t\t\t\t\t\t\t Data tidak ditemukan\n");
 	}
 
-	printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+	printf("\n\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
 	getch();
 }
 
@@ -1017,17 +1066,17 @@ void editMahasiswa() {
 	int found = 0;
 	long long nim;
 
-	printf("\t\t\t\t=====Edit Data Mahasiswa=====\n\n");
+	printf("\n\t\t\t\t\t\t\t =====Edit Data Mahasiswa=====\n\n");
 	fp = fopen("mahasiswa_info.txt", "r");
     fp1 = fopen("temp.txt", "w");
 
 	if(fp == NULL || fp1 == NULL) {
-		fprintf(stderr, "\t\t\tData tidak ditemukan\n");
+		fprintf(stderr, "\t\t\t\t\t\t\t Data tidak ditemukan\n");
 		getch();
 		return;
 	}
 
-	printf("\t\t\tMasukkan NIM: ");
+	printf("\t\t\t\t\t\t\t Masukkan NIM: ");
 	scanf("%lld", &nim);
 
 
@@ -1043,19 +1092,19 @@ void editMahasiswa() {
 		if(info.id_mahasiswa == nim) {
 			found = 1;
 
-			printf("\n\t\t\t\tNama Awal\t: %s", info.nama_awal);
-			printf("\n\t\t\t\tNama Akhir\t: %s", info.nama_akhir);
-			printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
-			printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
-			printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
+			printf("\n\t\t\t\t\t\t\t Nama Awal\t: %s", info.nama_awal);
+			printf("\n\t\t\t\t\t\t\t Nama Akhir\t: %s", info.nama_akhir);
+			printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info.id_mahasiswa);
+			printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info.kelas);
+			printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info.alamat);
 					// new
-			printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
-			printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
-			printf("\n\t\t\t\tIPK\t\t: %.2f", info.ipk);
-			printf("\n\t\t\t\t_____________________________________\n\n");
+			printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info.fakultas);
+			printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info.prodi);
+			printf("\n\t\t\t\t\t\t\t IPK\t\t: %.2f", info.ipk);
+			printf("\n\t\t\t\t\t\t\t _____________________________________\n\n");
 
 
-			printf("\n\t\t\tMasukkan nama awal baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan nama awal baru (0 untuk skip)  : ");
 			char new_nama_awal[20];
 			scanf("%s", new_nama_awal);
 			fflush(stdin);
@@ -1063,7 +1112,7 @@ void editMahasiswa() {
 				strcpy(info.nama_awal, new_nama_awal);
 			}
 
-			printf("\n\t\t\tMasukkan nama akhir baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan nama akhir baru (0 untuk skip) : ");
 			char new_nama_akhir[20];
 			scanf("%s", new_nama_akhir);
 			fflush(stdin);
@@ -1071,7 +1120,7 @@ void editMahasiswa() {
 				strcpy(info.nama_akhir, new_nama_akhir);
 			}
 
-			printf("\n\t\t\tMasukkan NIM baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan NIM baru (0 untuk skip)\t : ");
 			long long new_nim;
 			scanf("%lld", &new_nim);
 			fflush(stdin);
@@ -1079,7 +1128,7 @@ void editMahasiswa() {
 				info.id_mahasiswa = new_nim;
 			}
 
-			printf("\n\t\t\tMasukkan kelas baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan kelas baru (0 untuk skip)\t : ");
 			char new_kelas[20];
 			scanf("%s", new_kelas);
 			fflush(stdin);
@@ -1087,7 +1136,7 @@ void editMahasiswa() {
 				strcpy(info.kelas, new_kelas);
 			}
 
-			printf("\n\t\t\tMasukkan alamat baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan alamat baru (0 untuk skip)\t : ");
 			char new_alamat[20];
 			fgets(new_alamat, sizeof(new_alamat), stdin);
 			fflush(stdin);
@@ -1097,7 +1146,7 @@ void editMahasiswa() {
 			}
 
 			// new
-			printf("\n\t\t\tMasukkan fakultas baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan fakultas baru (0 untuk skip)\t : ");
 			char new_fakultas[50];
 			fgets(new_fakultas, sizeof(new_fakultas), stdin);
 			fflush(stdin);
@@ -1107,7 +1156,7 @@ void editMahasiswa() {
 			}
 
 			// new
-			printf("\n\t\t\tMasukkan prodi baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan prodi baru (0 untuk skip)\t : ");
 			char new_prodi[50];
 			fgets(new_prodi, sizeof(new_prodi), stdin);
 			fflush(stdin);
@@ -1116,7 +1165,7 @@ void editMahasiswa() {
 				strcpy(info.prodi, new_prodi);
 			}
 
-			printf("\n\t\t\tMasukkan ipk baru (0 untuk skip): ");
+			printf("\n\t\t\t\t\t\t\t Masukkan ipk baru (0 untuk skip)\t : ");
 			float new_ipk;
 			scanf("%f", &new_ipk);
 			fflush(stdin);
@@ -1124,8 +1173,8 @@ void editMahasiswa() {
 				info.ipk = new_ipk;
 			}
 
-			printf("\n\t\t\t\t__________________________________\n\n");
-			printf("\n\t\t\t\tData berhasil di update\n");
+			printf("\n\t\t\t\t\t\t\t __________________________________\n");
+			printf("\t\t\t\t\t\t\t Data berhasil di update\n");
 		}
 		// Tulis data (diperbarui atau tidak) ke file sementara
         fprintf(fp1, "%lld|%s|%s|%s|%s|%s|%s|%.2f\n",
@@ -1147,63 +1196,63 @@ void editMahasiswa() {
 		remove("mahasiswa_info.txt");
 		rename("temp.txt", "mahasiswa_info.txt");
 	} else {
-		printf("\n\t\t\tData tidak ditemukan\n");
+		printf("\n\t\t\t\t\t\t\t Data tidak ditemukan\n");
 		remove("temp.txt");
 	}
 
-	printf("\n\t\t\t\tTekan mana saja untuk kembali...");
+	printf("\n\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
 	getch();
 }
 
 void hapusSemua() {
     char pilihan;
 
-    printf("\t\t\t\t=====Hapus Semua Data=====\n\n");
-    printf("\t\t\tApakah yakin menghapus semua data? (y/n): ");
+    printf("\n\t\t\t\t\t\t\t =====Hapus Semua Data=====\n\n");
+    printf("\t\t\t\t\t\t\t Apakah yakin menghapus semua data? (y/n): ");
     scanf(" %c", &pilihan);
 
     if (pilihan == 'y' || pilihan == 'Y') {
         // Periksa apakah file "mahasiswa_info.txt" ada sebelum menghapusnya
         if (remove("mahasiswa_info.txt") == 0) {
-            printf("\n\t\t\tSemua data berhasil dihapus!\n");
+            printf("\n\t\t\t\t\t\t\t Semua data berhasil dihapus!\n");
         } else {
-            printf("\n\t\t\tError: File 'mahasiswa_info.txt' tidak ditemukan atau sudah kosong.\n");
+            printf("\n\t\t\t\t\t\t\t Error: File 'mahasiswa_info.txt' tidak ditemukan atau sudah kosong.\n");
         }
     } else {
-        printf("\n\t\t\t\tPenghapusan data dibatalkan.\n");
+        printf("\n\t\t\t\t\t\t\t\t Penghapusan data dibatalkan.\n");
     }
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\n\t\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     getch();
 }
 
 
 void tentangKami() {
 	system("cls");
-    printf("\t\t\t=====About Us=====\n\n");
-	printf("Selamat datang di Student Database Management System!\n");
-    printf("Aplikasi ini dirancang untuk mempermudah pengelolaan data siswa secara efektif dan efisien.\n");
-    printf("Dengan fitur-fitur yang mudah digunakan, aplikasi ini membantu Anda menyimpan, mencari, mengedit, dan menghapus\n");
-    printf("informasi siswa dengan cepat.\n\n");
+    printf("\t\t\t\t\t\t\t=====About Us=====\n\n");
+	printf("\t\tSelamat datang di Student Database Management System!\n");
+    printf("\t\tAplikasi ini dirancang untuk mempermudah pengelolaan data siswa secara efektif dan efisien.\n");
+    printf("\t\tDengan fitur-fitur yang mudah digunakan, aplikasi ini membantu Anda menyimpan, mencari, mengedit, dan menghapus\n");
+    printf("\t\tinformasi siswa dengan cepat.\n\n");
 
-    printf("Tujuan kami adalah menyediakan solusi sederhana namun bermanfaat untuk mengelola informasi siswa dalam lingkungan\n");
-    printf("pendidikan. Melalui aplikasi ini, Anda dapat dengan mudah mengakses data penting seperti nama siswa, nomor induk,\n");
-    printf("kelas, alamat, dan nilai persentase.\n\n");
+    printf("\t\tTujuan kami adalah menyediakan solusi sederhana namun bermanfaat untuk mengelola informasi siswa dalam lingkungan\n");
+    printf("\t\tpendidikan. Melalui aplikasi ini, Anda dapat dengan mudah mengakses data penting seperti nama siswa, nomor induk,\n");
+    printf("\t\tkelas, alamat, dan nilai persentase.\n\n");
 
-    printf("Kami percaya bahwa teknologi dapat membantu dalam meningkatkan efisiensi administrasi dan memberikan lebih banyak\n");
-    printf("waktu untuk fokus pada pendidikan siswa.\n\n");
+    printf("\t\tKami percaya bahwa teknologi dapat membantu dalam meningkatkan efisiensi administrasi dan memberikan lebih banyak\n");
+    printf("\t\twaktu untuk fokus pada pendidikan siswa.\n\n");
 
-    printf("Fitur utama dari sistem ini meliputi:\n");
-    printf("- Penambahan data siswa secara mudah\n");
-    printf("- Pencarian data siswa berdasarkan nomor induk\n");
-    printf("- Pengeditan dan penghapusan data siswa yang sudah tersimpan\n");
-    printf("- Penghapusan semua data siswa dengan satu klik\n");
-    printf("- Manajemen data yang aman dan terstruktur\n\n");
+    printf("\t\tFitur utama dari sistem ini meliputi:\n");
+    printf("\t\t- Penambahan data siswa secara mudah\n");
+    printf("\t\t- Pencarian data siswa berdasarkan nomor induk\n");
+    printf("\t\t- Pengeditan dan penghapusan data siswa yang sudah tersimpan\n");
+    printf("\t\t- Penghapusan semua data siswa dengan satu klik\n");
+    printf("\t\t- Manajemen data yang aman dan terstruktur\n\n");
 
-    printf("Terima kasih telah menggunakan aplikasi kami. Kami akan terus berinovasi untuk menyediakan fitur-fitur yang lebih\n");
-    printf("baik di masa depan.\n");
+    printf("\t\tTerima kasih telah menggunakan aplikasi kami. Kami akan terus berinovasi untuk menyediakan fitur-fitur yang lebih\n");
+    printf("\t\tbaik di masa depan.\n");
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\n\n\t\t\t\t\t\t Tekan mana saja untuk kembali...");
     getch();
     system("cls");
 }
@@ -1218,10 +1267,10 @@ void sortirAsc() {
 
 	fp = fopen("mahasiswa_info.txt", "r");
 
-	printf("\t\t\t\t=====Sortir IPK Mahasiswa ASCENDING=====\n\n");
+	printf("\n\t\t\t\t\t\t\t=====Sortir IPK Mahasiswa ASCENDING=====\n\n");
 
 	if(fp == NULL) {
-		fprintf(stderr, "\t\t\t\tFile Kosong\n");
+		fprintf(stderr, "\t\t\t\t\t\t\tFile Kosong\n");
 		getch();
 		return;
 	}
@@ -1244,22 +1293,22 @@ void sortirAsc() {
 	// sorti data IPK menggunakan qsort
 	qsort(info, found, sizeof(struct mahasiswa), bandingIPKAsc);
 
-	printf("\t\t\t\tData\n");
-    printf("\t\t\t\t__________\n\n");
+	printf("\t\t\t\t\t\t\t Data\n");
+    printf("\t\t\t\t\t\t\t __________\n\n");
 
     for(i = 0; i < found; i++) {
-    	printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info[i].nama_awal, info[i].nama_akhir);
-		printf("\n\t\t\t\tNIM\t\t: %lld", info[i].id_mahasiswa);
-		printf("\n\t\t\t\tKelas\t\t: %s", info[i].kelas);
-		printf("\n\t\t\t\tAlamat\t\t: %s", info[i].alamat);
+    	printf("\n\t\t\t\t\t\t\t Nama Mahasiswa\t: %s %s", info[i].nama_awal, info[i].nama_akhir);
+		printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info[i].id_mahasiswa);
+		printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info[i].kelas);
+		printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info[i].alamat);
 		// new
-		printf("\n\t\t\t\tFakultas\t: %s", info[i].fakultas);
-		printf("\n\t\t\t\tProdi\t\t: %s", info[i].prodi);
-		printf("\n\t\t\t\tIPK\t\t: %.2f", info[i].ipk);
-		printf("\n\t\t\t\t_____________________________________\n\n");
+		printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info[i].fakultas);
+		printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info[i].prodi);
+		printf("\n\t\t\t\t\t\t\t IPK\t\t: %.2f", info[i].ipk);
+		printf("\n\t\t\t\t\t\t\t _____________________________________\n\n");
 	}
 
-	printf("\t\t\t\tTekan mana saja untuk kembali...");
+	printf("\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
 	getch();
 }
 
@@ -1273,10 +1322,10 @@ void sortirDesc() {
 
 	fp = fopen("mahasiswa_info.txt", "r");
 
-	printf("\t\t\t\t=====Sortir IPK Mahasiswa DESCENDING=====\n\n");
+	printf("\t\t\t\t\t\t\t =====Sortir IPK Mahasiswa DESCENDING=====\n\n");
 
 	if(fp == NULL) {
-		fprintf(stderr, "\t\t\t\tFile Kosong\n");
+		fprintf(stderr, "\t\t\t\t\t\t\t File Kosong\n");
 		getch();
 		return;
 	}
@@ -1299,23 +1348,24 @@ void sortirDesc() {
 	// sorti data IPK menggunakan qsort
 	qsort(info, found, sizeof(struct mahasiswa), bandingIPKDesc);
 
-	printf("\t\t\t\tData\n");
-    printf("\t\t\t\t__________\n\n");
+	printf("\t\t\t\t\t\t\t Data\n");
+    printf("\t\t\t\t\t\t\t __________\n\n");
 
     // Menampilkan hasil sortir
     for(i = 0; i < found; i++) {
-    	printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info[i].nama_awal, info[i].nama_akhir);
-		printf("\n\t\t\t\tNIM\t\t: %lld", info[i].id_mahasiswa);
-		printf("\n\t\t\t\tKelas\t\t: %s", info[i].kelas);
-		printf("\n\t\t\t\tAlamat\t\t: %s", info[i].alamat);
+
+    	printf("\n\t\t\t\t\t\t\t Nama Mahasiswa\t: %s %s", info[i].nama_awal, info[i].nama_akhir);
+		printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info[i].id_mahasiswa);
+		printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info[i].kelas);
+		printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info[i].alamat);
 		// new
-		printf("\n\t\t\t\tFakultas\t: %s", info[i].fakultas);
-		printf("\n\t\t\t\tProdi\t\t: %s", info[i].prodi);
-		printf("\n\t\t\t\tIPK\t\t: %.2f", info[i].ipk);
-		printf("\n\t\t\t\t_____________________________________\n\n");
+		printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info[i].fakultas);
+		printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info[i].prodi);
+		printf("\n\t\t\t\t\t\t\t IPK\t\t: %.2f", info[i].ipk);
+		printf("\n\t\t\t\t\t\t\t _____________________________________\n\n");
 	}
 
-	printf("\t\t\t\tTekan mana saja untuk kembali...");
+	printf("\t\t\t\t\t\t\t Tekan mana saja untuk kembali...");
 
 	getch();
 }
@@ -1329,7 +1379,6 @@ void profilMahasiswa() {
     // Membaca data mahasiswa dari file mahasiswa_info.txt
     fp = fopen("mahasiswa_info.txt", "r");
 
-    printf("\t\t\t\t=====Profil Mahasiswa=====\n\n");
 
     if(fp == NULL) {
         fprintf(stderr, "\t\t\t\tFile Kosong\n");
@@ -1349,13 +1398,16 @@ void profilMahasiswa() {
                   &info.ipk) == 8) {
         if (nim_login2 == info.id_mahasiswa) {  // Membandingkan NIM login dengan NIM yang ada
             found = 1;
-            printf("\n\t\t\t\tNama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
-            printf("\n\t\t\t\tNIM\t\t: %lld", info.id_mahasiswa);
-            printf("\n\t\t\t\tKelas\t\t: %s", info.kelas);
-            printf("\n\t\t\t\tAlamat\t\t: %s", info.alamat);
-            printf("\n\t\t\t\tFakultas\t: %s", info.fakultas);
-            printf("\n\t\t\t\tProdi\t\t: %s", info.prodi);
-            printf("\n\t\t\t\t_____________________________________\n\n");
+            printf("\n\t\t\t\t\t\t\t+------------------------------------+\n");
+            printf("\t\t\t\t\t\t        |    ----- Profil Mahasiswa -----    |\n");
+            printf("\t\t\t\t\t\t\t+------------------------------------+\n");
+            printf("\n\t\t\t\t\t\t\t Nama Mahasiswa\t: %s %s", info.nama_awal, info.nama_akhir);
+            printf("\n\t\t\t\t\t\t\t NIM\t\t: %lld", info.id_mahasiswa);
+            printf("\n\t\t\t\t\t\t\t Kelas\t\t: %s", info.kelas);
+            printf("\n\t\t\t\t\t\t\t Alamat\t\t: %s", info.alamat);
+            printf("\n\t\t\t\t\t\t\t Fakultas\t: %s", info.fakultas);
+            printf("\n\t\t\t\t\t\t\t Prodi\t\t: %s", info.prodi);
+            printf("\n\t\t\t\t\t\t\t_____________________________________\n\n");
             break;  // Jika ditemukan, keluar dari loop
         }
     }
@@ -1363,10 +1415,10 @@ void profilMahasiswa() {
     fclose(fp);
 
     if(found == 0) {
-         printf("\n\t\t\t\tData tidak ditemukan untuk NIM: %lld\n", nim_login2);
+         printf("\n\t\t\t\t\t\t\tData tidak ditemukan untuk NIM: %lld\n\n", nim_login2);
     }
 
-    printf("\t\t\t\tTekan mana saja untuk kembali...");
+    printf("\t\t\t\t\t\t\tTekan mana saja untuk kembali...");
     getch();  // Menunggu input dari pengguna untuk kembali
 }
 
